@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Place Recommender</title>
+
+	<style>
+		/* Add CSS rules here */
+	</style>
+
+</head>
+
+<body style="background-image: url('{{ url_for('static', filename='image/pexels-min-an-962322.jpg') }}');">
+
+	<h1>Place Recommender</h1>
+
+	<form method="POST" action="{{ url_for('recommendations') }}">
+		<label for="description">Describe where would you like to go:</label>
+		<textarea name="description" id="description" required></textarea>
+
+		<label for="state">Select a State:</label>
+		<select name="state" id="state" required>
+			<option value="" disabled selected>Select a state</option>
+			{% for state in states %}
+			<option value="{{ state }}">{{ state }}</option>
+			{% endfor %}
+		</select>
+
+		<input type="submit" value="Get Recommendations">
+	</form>
+
+	<div id="results">
+		{% if recommendations %}
+		<h2>Recommendations:</h2>
+		<div class="recommendations-container">
+			{% for recommendation in recommendations %}
+			<div class="recommendation">
+				<h3>{{ recommendation.Name }}</h3>
+				<p>State: {{ recommendation.State }}</p>
+				<p>Rating: {{ recommendation.Rating }}</p>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+	</div>
+</body>
+
+</html>
